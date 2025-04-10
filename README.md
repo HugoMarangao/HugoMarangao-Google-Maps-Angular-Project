@@ -183,3 +183,4 @@ google-maps-app/
 **Thank you for checking out this project!**  
 
 For any questions or feedback, feel free to reach out or open an issue on the repository.
+# HugoMarangao-Google-Maps-Angular-Project

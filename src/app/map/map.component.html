@@ -1,0 +1,65 @@
+<mat-sidenav-container class="map-container" autosize>
+  <!-- Keep position="end" for desktop behavior if you want. -->
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    position="end"
+    [opened]="sidenavOpen"
+  >
+    <div class="side-content">
+      <button class="button-content" (click)="sidenav.close()">X</button>
+      <img
+        class="img-content"
+        *ngIf="selectedMarker?.photos?.length"
+        [src]="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='
+               + selectedMarker.photos[0].photo_reference
+               + '&key=AIzaSyDJ7_QiHdOH9gGSdvBS7A_viz0dVYlfp1Q'"
+        alt="{{ selectedMarker?.title }}"
+      />
+      <h4>{{ selectedMarker?.title }}</h4>
+      <p>{{ selectedMarker?.description }}</p>
+      <div class="action-buttons">
+        <button class="button-contentRote" (click)="addRoute()">Route</button>
+        <button
+          class="button-contentLove"
+          [ngClass]="{ 'selected': isLoved }"
+          (click)="toggleLove()"
+        >
+          Love
+        </button>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <!-- Container with the map and custom footer -->
+  <div class="map-container">
+    <app-sidebar
+      (search)="searchTerm = $event"
+      (categoryFilter)="activeCategory = $event"
+      (markerSelected)="onMarkerSelected($event)"
+    ></app-sidebar>
+    <google-map #map [center]="center" [zoom]="zoom">
+      <map-marker
+        *ngFor="let marker of filteredMarkers"
+        [position]="marker.position"
+        (mapClick)="onMarkerClick(marker)"
+      >
+      </map-marker>
+    </google-map>
+
+    <!-- Footer over the map – centered with route and walking info -->
+    <div class="map-footer" *ngIf="selectedForRoute.length > 0">
+      <div class="walking-info" *ngIf="walkTime">
+        <i class="fa fa-walking animated-icon"></i>
+        <span>{{ walkTime }} on foot</span>
+      </div>
+      <div class="footer-info">
+        <div><strong>Origin:</strong> {{ selectedForRoute[0]?.title }}</div>
+        <div *ngIf="selectedForRoute.length > 1">
+          <strong>Destination:</strong> {{ selectedForRoute[1]?.title }}
+        </div>
+      </div>
+      <button class="footer-button" (click)="clearRoute()">Cancel</button>
+    </div>
+  </div>
+</mat-sidenav-container>

@@ -1,0 +1,11 @@
+<h2>Favorite Locations</h2>
+<div class="loved-list">
+  <div *ngFor="let place of lovedPlaces" class="loved-item" (click)="selectPlace(place)">
+    <strong>{{ place.title }}</strong>
+    <p>{{ place.description }}</p>
+  </div>
+  <div *ngIf="lovedPlaces.length === 0">
+    <p>No locations added.</p>
+  </div>
+</div>
+<button mat-button (click)="cancel()">Close</button>

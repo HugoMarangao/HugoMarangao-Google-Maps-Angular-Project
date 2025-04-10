@@ -1,0 +1,21 @@
+<div class="sidebar">
+  <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+    <input
+      type="text"
+      placeholder="Search location..."
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+      class="input-search"
+    />
+    <div class="loved-icon" (click)="openLovedModal()">
+      <mat-icon>favorite</mat-icon>
+    </div>
+  </div>
+
+  <div class="filter-buttons">
+    <button (click)="filter('hotel')">Hotels</button>
+    <button (click)="filter('bar')">Pubs</button>
+    <button (click)="filter('restaurant')">Restaurants</button>
+    <button (click)="filter('')">Cancel</button>
+  </div>
+</div>
